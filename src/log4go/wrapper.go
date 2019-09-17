@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	Global = NewDefaultLogger(FINE)
+	Global = NewWLDefaultLogger(FINE)
 }
 
 // Wrapper for (*Logger).LoadConfiguration
