@@ -61,7 +61,7 @@ func (f *Filter) intLogf(lvl Level, format string, args ...interface{}) {
 	*/
 	default_filter := Global["stdout"]
 
-	if default_filter != nil && lvl > default_filter.Level {
+	if default_filter != nil && lvl >= default_filter.Level {
 		default_filter.LogWrite(rec)
 	}
 
@@ -101,7 +101,7 @@ func (f *Filter) intLogc(lvl Level, closure func() string) {
 
 	default_filter := Global["stdout"]
 
-	if default_filter != nil &&  lvl > default_filter.Level {
+	if default_filter != nil &&  lvl >= default_filter.Level {
 		default_filter.LogWrite(rec)
 	}
 
@@ -133,7 +133,7 @@ func (f *Filter) Log(lvl Level, source, message string) {
 
 	default_filter := Global["stdout"]
 
-	if default_filter != nil && lvl > default_filter.Level {
+	if default_filter != nil && lvl >= default_filter.Level {
 		default_filter.LogWrite(rec)
 	}
 

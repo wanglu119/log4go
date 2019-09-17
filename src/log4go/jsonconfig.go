@@ -144,7 +144,7 @@ func getLogLevel(l string) Level {
 	return lvl
 }
 
-func jsonToConsoleLogWriter(filename string, cf *ConsoleConfig) (*ConsoleLogWriter, bool) {
+func jsonToConsoleLogWriter(filename string, cf *ConsoleConfig) (LogWriter, bool) {
 	format := "[%D %T] [%C] [%L] (%S) %M"
 
 	if len(cf.Pattern) > 0 {
@@ -155,7 +155,7 @@ func jsonToConsoleLogWriter(filename string, cf *ConsoleConfig) (*ConsoleLogWrit
 		return nil, true
 	}
 
-	clw := NewConsoleLogWriter()
+	clw := NewConsoleLogWriterWL()
 	clw.SetFormat(format)
 
 	return clw, true

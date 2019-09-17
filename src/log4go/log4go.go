@@ -188,6 +188,15 @@ func (log Logger) AddFilter(name string, lvl Level, writer LogWriter, categorys 
 	return log
 }
 
+func (log Logger) logToConsole(rec *LogRecord, lvl Level) {
+	if filt, ok := log["stdout"]; ok {
+		if lvl < filt.Level {
+			return
+		}
+		filt.LogWrite(rec)
+	}
+}
+
 /******* Logging *******/
 // Send a formatted log message internally
 func (log Logger) intLogf(lvl Level, format string, args ...interface{}) {
@@ -225,12 +234,15 @@ func (log Logger) intLogf(lvl Level, format string, args ...interface{}) {
 	}
 
 	// Dispatch the logs
+	/*
 	for _, filt := range log {
 		if lvl < filt.Level {
 			continue
 		}
 		filt.LogWrite(rec)
 	}
+	*/
+	log.logToConsole(rec, lvl)
 }
 
 // Send a closure log message internally
@@ -264,12 +276,15 @@ func (log Logger) intLogc(lvl Level, closure func() string) {
 	}
 
 	// Dispatch the logs
+	/*
 	for _, filt := range log {
 		if lvl < filt.Level {
 			continue
 		}
 		filt.LogWrite(rec)
 	}
+	*/
+	log.logToConsole(rec, lvl)
 }
 
 // Send a log message with manual level, source, and message.
@@ -296,12 +311,15 @@ func (log Logger) Log(lvl Level, source, message string) {
 	}
 
 	// Dispatch the logs
+	/*
 	for _, filt := range log {
 		if lvl < filt.Level {
 			continue
 		}
 		filt.LogWrite(rec)
 	}
+	*/
+	log.logToConsole(rec, lvl)
 }
 
 // Logf logs a formatted log message at the given log level, using the caller as
